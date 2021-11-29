@@ -335,7 +335,13 @@ public class GUI_EditPhieuMuon extends JFrame implements ActionListener, MouseLi
 				i++;
 				stt = String.valueOf(i);
 				if(s != null) {
-					String sl = String.valueOf(listCTPM.get(i-1).getSoLuong());
+					String sl;
+					if(i - 1 < listCTPM.size()) {
+						sl = String.valueOf(listCTPM.get(i-1).getSoLuong());
+					}else {
+						sl = String.valueOf(1);
+					}
+					
 					String [] rowData= {stt,
 										s.getId(), 
 										s.getTenSach(), 

@@ -106,7 +106,7 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 		panel_1.add(panel_2);
 		
 		JLabel lbl_TenSach = new JLabel("Tên sách:");
-		lbl_TenSach.setFont(new Font("Arial", Font.PLAIN, 16));
+		lbl_TenSach.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_TenSach.setBounds(21, 11, 166, 30);
 		panel_2.add(lbl_TenSach);
 		
@@ -124,12 +124,12 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 		panel_2.add(lbl_TheLoai);
 		
 		JLabel lbl_ten = new JLabel("Tên tác giả:");
-		lbl_ten.setFont(new Font("Arial", Font.PLAIN, 16));
+		lbl_ten.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_ten.setBounds(21, 152, 166, 30);
 		panel_2.add(lbl_ten);
 		
 		JLabel lbl_NhaSx = new JLabel("Tên nhà xuất bản:");
-		lbl_NhaSx.setFont(new Font("Arial", Font.PLAIN, 16));
+		lbl_NhaSx.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_NhaSx.setBounds(21, 234, 166, 30);
 		panel_2.add(lbl_NhaSx);
 		

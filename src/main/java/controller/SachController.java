@@ -81,4 +81,13 @@ public class SachController {
 		}
 		return null;
 	}
+	public List<Sach> searchSach(String keyword){
+		List<Sach> listSach = new ArrayList<Sach>();
+		try {
+			listSach = sachDao.findSachByKeyWord(keyword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return listSach;
+	}
 }

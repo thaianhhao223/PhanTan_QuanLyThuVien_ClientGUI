@@ -42,7 +42,8 @@ public class GUI_ThongTinCaNhan extends JFrame implements ActionListener{
 	private String Field_email;
 	private String Field_Sdt;
 	private JButton btn_ChinhSua;
-	private List<ThuThu> thuThu = new ArrayList<ThuThu>();
+	private List<ThuThu> listThuTHu = new ArrayList<ThuThu>();
+	private ThuThu thuThu = new ThuThu();
 	private JTable table;
 	private DefaultTableModel tablemodel;
 	private JScrollPane scroll;
@@ -167,18 +168,69 @@ public class GUI_ThongTinCaNhan extends JFrame implements ActionListener{
 	
 	public void loadData() {
 		ThuThuController thuThuController = new ThuThuController();
-//		thuThu = thuThuController.getThuThu();
+		thuThu = thuThuController.getInstance();
+		txtDiaChi.setText(thuThu.getDiaChi());
+		txtEmail.setText(thuThu.getEmail());
+		txtHoTen.setText(thuThu.getHoTen());
+		txtSDT.setText(thuThu.getSoDienThoai());
 //		txtHoTen.setText(new ThuThu().getHoTen());
 //		System.out.print(txtHoTen);
 //	
 	}
-
+	public boolean valid() {
+		if(txtHoTen.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Bạn chưa nhập họ tên");
+			return false;
+		}
+		if(txtEmail.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Bạn chưa nhập email");
+			return false;
+		}
+		String regex = "^\\w+@[a-z]+.[a-z]{2,4}+$";
+		if(!txtEmail.getText().matches(regex)) {
+			JOptionPane.showMessageDialog(this, "Bạn nhập sai định dạng email");
+			return false;
+		}
+		regex = "\\d{10}";
+		if(txtSDT.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Bạn chưa nhập số điện thoại");
+			return false;
+		}
+		if(!txtSDT.getText().matches(regex)) {
+			JOptionPane.showMessageDialog(this, "Bạn nhập số điện thoại sai định dạng");
+			return false;
+		}
+		if(txtDiaChi.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Bạn chưa nhập địa chỉ");
+			return false;
+		}
+		return true;
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		Field_email = txtEmail.getText();
 		Field_Sdt = txtSDT.getText();
 		
+		if(o.equals(btn_ChinhSua)) {
+			if(valid()) {
+				ThuThu thuThuUpdate = new ThuThu();
+				ThuThuController thuThuController = new ThuThuController();
+				thuThuUpdate.setId(thuThu.getId());
+				thuThuUpdate.setHoTen(txtHoTen.getText());
+				thuThuUpdate.setDiaChi(txtDiaChi.getText());
+				thuThuUpdate.setEmail(txtEmail.getText());
+				thuThuUpdate.setSoDienThoai(txtSDT.getText());
+				
+				boolean ktr = thuThuController.updateThuThu(thuThuUpdate);
+				if(ktr) {
+					JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+					thuThuController.setInstance(thuThuUpdate);
+				}else {
+					JOptionPane.showMessageDialog(this, "Cập nhật thất bại");
+				}
+			}
+		}
 		
 		if (o.equals(btn_Thoat)) {
 			dispose();

@@ -28,7 +28,7 @@ import controller.PhieuMuonController;
 import entity.DocGia;
 import entity.PhieuMuon;
 
-public class Panel_DSDKMuonSach extends JPanel implements ActionListener{
+public class Panel_PhieuMuonQuaHan extends JPanel implements ActionListener{
 	private JPanel contentPane;
 	private JMenu mn_thanhtoan;
 	private JTextField textField_Tim;
@@ -60,8 +60,8 @@ public class Panel_DSDKMuonSach extends JPanel implements ActionListener{
 	/**
 	 * Create the panel.
 	 */
-	public Panel_DSDKMuonSach() {
-		setName("DANH SÁCH DUYỆT ĐĂNG KÍ MƯỢN SÁCH");
+	public Panel_PhieuMuonQuaHan() {
+		setName("DANH SÁCH PHIẾU MƯỢN QUÁ HẠN");
 		setBounds(100, 100, 1295, 691);
 		setLayout(null);
 		
@@ -225,7 +225,7 @@ public class Panel_DSDKMuonSach extends JPanel implements ActionListener{
 		btnTim.setBounds(10, 122, 56, 50);
 		paneldg2.add(btnTim);
 		
-		JTextField btn_TieuDe = new JTextField("DUYỆT DANH SÁCH ĐĂNG KÍ MƯỢN SÁCH");
+		JTextField btn_TieuDe = new JTextField("DANH SÁCH PHIẾU MƯỢN QUÁ HẠN");
 		btn_TieuDe.setFont(new Font("Times New Roman", Font.BOLD, 36));
 		btn_TieuDe.setHorizontalAlignment(SwingConstants.CENTER);
 		btn_TieuDe.setForeground(Color.WHITE);
@@ -320,7 +320,7 @@ public class Panel_DSDKMuonSach extends JPanel implements ActionListener{
 			super.repaint(); 
 		} else if (o.equals(mn_Dki)) {
 			super.removeAll();
-			Panel_DSDKMuonSach dkMuonSach = new Panel_DSDKMuonSach();
+			Panel_PhieuMuonQuaHan dkMuonSach = new Panel_PhieuMuonQuaHan();
 			dkMuonSach.setBounds(0, 0, super.getWidth(), super.getHeight());
 			super.add(dkMuonSach);
 			super.validate();

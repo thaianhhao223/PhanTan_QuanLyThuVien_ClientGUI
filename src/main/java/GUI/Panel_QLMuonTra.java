@@ -68,6 +68,7 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 	private JButton btn_Thoat;
 	private JButton btn_ChinhSua;
 	private JButton btn_traPhieuMuon;
+	private JButton btn_TimKiem;
 	private JMenuItem mn_TkHki;
 	private JTable table;
 	private DefaultTableModel tablemodel;
@@ -230,7 +231,7 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 		btn_Thoat.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		panel_1.add(btn_Thoat);
 		
-		JButton btn_TimKiem = new JButton("");
+		btn_TimKiem = new JButton("");
 		btn_TimKiem.setBackground(Color.WHITE);
 		btn_TimKiem.setBounds(221, 40, 72, 65);
 		btn_TimKiem.setIcon(new ImageIcon("IMG\\search-30.PNG"));
@@ -244,7 +245,7 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 		btn_Tieude.setBackground(new Color(152, 251, 152));
 		panel_1.add(btn_Tieude);
 		
-		btn_traPhieuMuon = new JButton("Trả phiếu mượn");
+		btn_traPhieuMuon = new JButton("Cập nhật");
 		btn_traPhieuMuon.setBackground(Color.WHITE);
 		btn_traPhieuMuon.setBounds(968, 40, 136, 65);
 		btn_traPhieuMuon.setFont(new Font("Times New Roman", Font.PLAIN, 14));
@@ -266,6 +267,7 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 		
 		textField = new JTextField();
 		textField.setBounds(303, 41, 293, 65);
+		textField.setFont(new Font("Times New Roman", Font.PLAIN, 24));
 		panel_1.add(textField);
 		textField.setColumns(10);
 		
@@ -314,6 +316,7 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 		
 		txtMaDauSach = new JComboBox<String>();
 		txtMaDauSach.setForeground(Color.BLACK);
+		txtMaDauSach.setBackground(Color.WHITE);
 		txtMaDauSach.setFont(new Font("Arial", Font.PLAIN, 18));
 		
 		txtMaDauSach.setBackground(Color.WHITE);
@@ -390,6 +393,9 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 		txtSL.addActionListener(this);
 		
 		btn_ChinhSua.addActionListener(this);
+		btn_TimKiem.addActionListener(this);
+		btn_traPhieuMuon.addActionListener(this);
+		
 		loadData();
 		
 	}
@@ -435,6 +441,12 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 phiếu mượn để chỉnh sửa");
 			}
 		}
+		if(o.equals(btn_TimKiem)) {
+			searchPhieuMuon();
+		}
+		if(o.equals(btn_traPhieuMuon)) {
+			loadData();
+		}
 		if (o.equals(button)) {
 			super.removeAll();
 			Panel_Index index = new Panel_Index();
@@ -479,7 +491,7 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 			super.repaint(); 
 		} else if (o.equals(mn_Dki)) {
 			super.removeAll();
-			Panel_DSDKMuonSach dkMuonSach = new Panel_DSDKMuonSach();
+			Panel_PhieuMuonQuaHan dkMuonSach = new Panel_PhieuMuonQuaHan();
 			dkMuonSach.setBounds(0, 0, super.getWidth(), super.getHeight());
 			super.add(dkMuonSach);
 			super.validate();
@@ -493,7 +505,7 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 			super.repaint(); 
 		} else if (o.equals(btn_DSDK)) {
 			super.removeAll();
-			Panel_DSDKMuonSach dkmuonsach = new Panel_DSDKMuonSach();
+			Panel_PhieuMuonQuaHan dkmuonsach = new Panel_PhieuMuonQuaHan();
 			dkmuonsach.setBounds(0, 0, super.getWidth(), super.getHeight());
 			super.add(dkmuonsach);
 			super.validate();
@@ -529,6 +541,43 @@ public class Panel_QLMuonTra extends JPanel implements ActionListener, MouseList
 		}
 		
 	}
+	private void searchPhieuMuon() {
+		// TODO Auto-generated method stub
+		int n = tablemodel.getRowCount();
+		for (int i = 0; i < n; i++) {
+			tablemodel.removeRow(0);
+		}
+		int size = listPhieuMuon.size();
+		for (int i = 0; i < size; i++) {
+			listPhieuMuon.remove(0);
+		}
+		PhieuMuonController phieuMuonController = new PhieuMuonController();
+		listPhieuMuon = phieuMuonController.searchPhieuMuon(textField.getText());
+		if(listPhieuMuon!=null) {
+			int i = 0;
+			String stt;
+			for(PhieuMuon s: listPhieuMuon) {
+				i++;
+				stt = String.valueOf(i);
+				String ngayMuon = s.getNgayMuon().toString();
+				String ngayTra = s.getNgayTra().toString();
+				String docgia = String.valueOf(s.getDocGia().getHoTen());
+				String thuthu = String.valueOf(s.getThuThu().getHoTen());
+				String [] rowData= {stt,
+									s.getId(), 
+									ngayMuon, 
+									ngayTra,
+									s.getTrangThai(), 
+									docgia,
+									thuthu};
+				tablemodel.addRow(rowData);
+				System.out.println(s.toString());
+			}
+			table.setModel(tablemodel);
+		}
+		textField.setText("");
+	}
+
 	public void loadData() {
 		int n = tablemodel.getRowCount();
 		for (int i = 0; i < n; i++) {

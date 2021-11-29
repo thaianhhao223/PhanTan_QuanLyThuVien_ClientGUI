@@ -314,7 +314,7 @@ public class Panel_ThongKe extends JPanel implements ActionListener{
 			super.repaint(); 
 		} else if (o.equals(mn_Dki)) {
 			super.removeAll();
-			Panel_DSDKMuonSach dkMuonSach = new Panel_DSDKMuonSach();
+			Panel_PhieuMuonQuaHan dkMuonSach = new Panel_PhieuMuonQuaHan();
 			dkMuonSach.setBounds(0, 0, super.getWidth(), super.getHeight());
 			super.add(dkMuonSach);
 			super.validate();

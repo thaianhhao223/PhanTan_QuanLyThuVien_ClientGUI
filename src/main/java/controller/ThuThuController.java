@@ -54,4 +54,13 @@ public class ThuThuController {
 		}
 		return null;
 	}
+	public boolean updateThuThu(ThuThu thuThu) {
+		try {
+			return thuThuDao.updateThuThu(thuThu);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

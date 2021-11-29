@@ -168,6 +168,7 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 //		contentPane_1.add(comboBox_Lop);
 		
 		textField_Email = new JTextField();
+		textField_Email.setForeground(Color.BLACK);
 		textField_Email.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		textField_Email.setBounds(197, 267, 304, 32); //197, 402, 304, 34
 		contentPane_1.add(textField_Email);
@@ -178,6 +179,8 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 		contentPane_1.add(lbl_CVu);
 		
 		textField_Sdt = new JTextField();
+		textField_Sdt.setForeground(Color.BLACK);
+		textField_Sdt.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		textField_Sdt.setBounds(197, 340, 304, 36);
 		contentPane_1.add(textField_Sdt);
 		textField_Sdt.setColumns(10);
@@ -189,6 +192,7 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 		contentPane_1.add(lblNewLabel_Sdt);
 		
 		txtChuyenNganh = new JTextField();
+		txtChuyenNganh.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtChuyenNganh.setBounds(197, 203, 304, 30); //197, 267, 304, 32
 		contentPane_1.add(txtChuyenNganh);
 		
@@ -210,13 +214,19 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
 			return false;
 		}
-		String regex = "\\d+";
-		if(textField_Sdt.getText().length() < 1 && textField_Sdt.getText().matches(regex)) {
+		//String regex = "\\b[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
+		String regex = "^\\w+@[a-z]+.[a-z]{2,4}+$";
+		if(textField_Email.getText().length() < 1) {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
 			return false;
 		}
+		if(!textField_Email.getText().matches(regex)) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập chính xác email");
+			return false;
+		}
+		regex = "\\d{10}";
 		if(! textField_Sdt.getText().matches(regex)) {
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng số điện thoại");
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng số điện thoại (10 số)");
 			return false;
 		}
 		return true;

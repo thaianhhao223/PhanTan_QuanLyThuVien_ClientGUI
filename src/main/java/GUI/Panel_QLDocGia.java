@@ -69,7 +69,7 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 	private JTextField txtEmail;
 	private JTextField txtSDT;
 	private JButton btn_ChinhSua;
-
+	private JButton btn_TimKiem;
 	private List<DocGia> listdocgia;
 	/**
 	 * Create the panel.
@@ -218,7 +218,7 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 		panel_tks.add(btn_Thoat);
 		
 		
-		JButton btn_TimKiem = new JButton("");
+		btn_TimKiem = new JButton("");
 		btn_TimKiem.setBackground(Color.WHITE);
 		btn_TimKiem.setBounds(195, 40, 72, 65);
 		btn_TimKiem.setIcon(new ImageIcon("IMG\\search-30.PNG"));
@@ -256,6 +256,7 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 //		btn_Xoa.addActionListener(this);
 		
 		textField_Tim = new JTextField();
+		textField_Tim.setFont(new Font("Times New Roman", Font.BOLD, 24));
 		textField_Tim.setBounds(277, 41, 319, 65);
 		panel_tks.add(textField_Tim);
 		textField_Tim.setColumns(10);
@@ -280,65 +281,65 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 		panel.setLayout(null);
 		
 		JLabel lblHoten = new JLabel("Họ Tên:");
-		lblHoten.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblHoten.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lblHoten.setBounds(20, 20, 175, 15);
 		panel.add(lblHoten);
 		
 		txtHoTen = new JTextField();
 		txtHoTen.setForeground(Color.BLACK);
-		txtHoTen.setFont(new Font("Arial", Font.PLAIN, 18));
+		txtHoTen.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtHoTen.setColumns(10);
 		txtHoTen.setBackground(Color.WHITE);
 		txtHoTen.setBounds(100, 15, 175, 30);
 		panel.add(txtHoTen);
 		
 		JLabel lblChucVu = new JLabel("Chức Vụ:");
-		lblChucVu.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblChucVu.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lblChucVu.setBounds(20, 70, 175, 15);
 		panel.add(lblChucVu);
 		
 		txtChucVu = new JTextField();
 		txtChucVu.setForeground(Color.BLACK);
-		txtChucVu.setFont(new Font("Arial", Font.PLAIN, 18));
+		txtChucVu.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtChucVu.setColumns(10);
 		txtChucVu.setBackground(Color.WHITE);
 		txtChucVu.setBounds(100, 65, 175, 30);
 		panel.add(txtChucVu);
 		
 		JLabel lblChuyenNganh = new JLabel("Chuyên ngành:");
-		lblChuyenNganh.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblChuyenNganh.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lblChuyenNganh.setBounds(400, 20, 175, 15);
 		panel.add(lblChuyenNganh);
 		
 		txtChuyenNganh = new JTextField();
 		txtChuyenNganh.setForeground(Color.BLACK);
-		txtChuyenNganh.setFont(new Font("Arial", Font.PLAIN, 18));
+		txtChuyenNganh.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtChuyenNganh.setColumns(10);
 		txtChuyenNganh.setBackground(Color.WHITE);
 		txtChuyenNganh.setBounds(550, 15, 175, 30);
 		panel.add(txtChuyenNganh);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblEmail.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lblEmail.setBounds(400, 70, 175, 15);
 		panel.add(lblEmail);
 		
 		txtEmail = new JTextField();
 		txtEmail.setForeground(Color.BLACK);
-		txtEmail.setFont(new Font("Arial", Font.PLAIN, 18));
+		txtEmail.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtEmail.setColumns(10);
 		txtEmail.setBackground(Color.WHITE);
 		txtEmail.setBounds(550, 65, 175, 30);
 		panel.add(txtEmail);
 		
 		JLabel lblSDT = new JLabel("Số Điện Thoại:");
-		lblSDT.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblSDT.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lblSDT.setBounds(800, 20, 175, 15);
 		panel.add(lblSDT);
 		
 		txtSDT = new JTextField();
 		txtSDT.setForeground(Color.BLACK);
-		txtSDT.setFont(new Font("Arial", Font.PLAIN, 18));
+		txtSDT.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtSDT.setColumns(10);
 		txtSDT.setBackground(Color.WHITE);
 		txtSDT.setBounds(950, 15, 175, 30);
@@ -346,7 +347,7 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 		
 	
 		table.addMouseListener(this);
-		
+		btn_TimKiem.addActionListener(this);
 		loadData();
 		
 		
@@ -436,7 +437,7 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 			super.repaint(); 
 		} else if (o.equals(mn_Dki)) {
 			super.removeAll();
-			Panel_DSDKMuonSach dkMuonSach = new Panel_DSDKMuonSach();
+			Panel_PhieuMuonQuaHan dkMuonSach = new Panel_PhieuMuonQuaHan();
 			dkMuonSach.setBounds(0, 0, super.getWidth(), super.getHeight());
 			super.add(dkMuonSach);
 			super.validate();
@@ -498,8 +499,37 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 			}
 
 		}
+		if(o.equals(btn_TimKiem)) {
+			searchDocGia();
+		}
 	}
-	
+	public void searchDocGia() {
+		int size = docgia.size();
+		for(int i = 0; i < size; i++) {
+			docgia.remove(0);
+		}
+		removeRow();
+		DocGiaController docgiaController = new DocGiaController();
+		listdocgia = docgiaController.searchDocGia(textField_Tim.getText());
+		if(listdocgia!=null) {
+			int i = 0;
+			String stt;
+			for(DocGia s: listdocgia) {
+				i++;
+				stt = String.valueOf(i);
+				
+				String [] rowData= {stt,
+									s.getHoTen(), 
+									s.getChucVu(), 
+									s.getChuyenNganh(),
+									s.getEmail(), 
+									s.getSoDienThoai()};
+				tablemodel.addRow(rowData);
+				System.out.println(s.toString());
+			}
+			table.setModel(tablemodel);
+		}
+	}
 	public void removeRow() {
 		int size = table.getRowCount();
 		for (int i = 0; i < size; i++) {

@@ -122,12 +122,12 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 		panel_1.add(panel_2);
 		
 		JLabel lbl_TheLoai = new JLabel("Mã thủ thư:");
-		lbl_TheLoai.setFont(new Font("Arial", Font.PLAIN, 16));
+		lbl_TheLoai.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_TheLoai.setBounds(20, 20, 166, 30);
 		panel_2.add(lbl_TheLoai);
 		
 		JLabel lbl_ten = new JLabel("Mã độc giả:");
-		lbl_ten.setFont(new Font("Arial", Font.PLAIN, 16));
+		lbl_ten.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_ten.setBounds(20, 80, 166, 30);
 		panel_2.add(lbl_ten);
 		
@@ -143,7 +143,7 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 		
 		txt_maDG = new JTextField();
 		txt_maDG.setForeground(Color.BLACK);
-		txt_maDG.setFont(new Font("Arial", Font.PLAIN, 16));
+		txt_maDG.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txt_maDG.setColumns(10);
 		txt_maDG.setBackground(Color.WHITE);
 		txt_maDG.setBounds(170, 80, 336, 30);
@@ -151,7 +151,7 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 		
 		btn_xacnhan = new JButton("Tạo mới");
 		btn_xacnhan.setIcon(new ImageIcon("IMG\\check.png"));
-		btn_xacnhan.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btn_xacnhan.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btn_xacnhan.setBackground(Color.WHITE);
 		btn_xacnhan.setBounds(170, 580, 120, 34);
 		panel_2.add(btn_xacnhan);
@@ -159,7 +159,7 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 		
 		btn_huy = new JButton("Hủy");
 		btn_huy.setIcon(new ImageIcon("IMG\\cancel.png"));
-		btn_huy.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btn_huy.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btn_huy.setBackground(Color.WHITE);
 		btn_huy.setBounds(300, 580, 120, 34);
 		panel_2.add(btn_huy);
@@ -170,7 +170,7 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 		panel_2.add(textField_NgayTra);
 		
 		JLabel lbl_GiaTien = new JLabel("Ngày mượn:");
-		lbl_GiaTien.setFont(new Font("Arial", Font.PLAIN, 16));
+		lbl_GiaTien.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_GiaTien.setBounds(20, 140, 166, 30); //21, 385, 166, 30
 		panel_2.add(lbl_GiaTien);
 		
@@ -187,7 +187,7 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 //		panel_2.add(txtField_SoLuong);
 		
 		JLabel lbl_SL = new JLabel("Ngày trả:");
-		lbl_SL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbl_SL.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_SL.setBounds(20, 200, 166, 30); //21, 465, 81, 30
 		panel_2.add(lbl_SL);
 		
@@ -197,38 +197,38 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 		panel_2.add(txtField_Ngaymuon);
 		
 		txtMaThuThu = new JTextField();
-		txtMaThuThu.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtMaThuThu.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtMaThuThu.setBounds(170, 20, 336, 30);
 		panel_2.add(txtMaThuThu);
 		
 		JLabel lbl_LuuY = new JLabel("(*) Điền lần lượt từng mã sách");
-		lbl_LuuY.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lbl_LuuY.setFont(new Font("Times New Roman", Font.PLAIN, 10));
 		lbl_LuuY.setForeground(Color.RED);
 		lbl_LuuY.setBounds(170, 240, 166, 15); //21, 465, 81, 30
 		panel_2.add(lbl_LuuY);
 		
 		JLabel lbl_SachId = new JLabel("Mã sách:");
-		lbl_SachId.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbl_SachId.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_SachId.setBounds(20, 260, 166, 30); //21, 465, 81, 30
 		panel_2.add(lbl_SachId);
 		
 		txtSachId = new JTextField();
 		txtSachId.setForeground(Color.BLACK);
-		txtSachId.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtSachId.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		txtSachId.setColumns(10);
 		txtSachId.setBackground(Color.WHITE);
 		txtSachId.setBounds(170, 260, 336, 30);
 		panel_2.add(txtSachId);
 		
 		btn_timSach = new JButton("Tìm sách");
-		btn_timSach.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btn_timSach.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btn_timSach.setBackground(Color.WHITE);
 		btn_timSach.setBounds(170, 320, 120, 34);
 		panel_2.add(btn_timSach);
 		
 		
 		btn_boChon = new JButton("Bỏ chọn");
-		btn_boChon.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btn_boChon.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btn_boChon.setBackground(Color.WHITE);
 		btn_boChon.setBounds(300, 320, 120, 34);
 		panel_2.add(btn_boChon);

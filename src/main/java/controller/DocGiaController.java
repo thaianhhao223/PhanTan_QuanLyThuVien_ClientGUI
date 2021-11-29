@@ -87,5 +87,14 @@ public class DocGiaController {
 		}
 		return null;
 	}
-
+	public List<DocGia> searchDocGia(String keyword){
+		List<DocGia> listDocGia = new ArrayList<DocGia>();
+		try {
+			listDocGia = docGiaDao.findDocGiaByKeyWord(keyword);
+			System.out.println(listDocGia);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listDocGia;
+	}
 }

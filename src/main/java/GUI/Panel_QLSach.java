@@ -66,6 +66,7 @@ public class Panel_QLSach extends JPanel implements ActionListener, MouseListene
 	private JTextField txtSoLuong;
 	private JButton btn_ChinhSua;
 	private JButton btn_capnhat;
+	private JButton btn_TimKiem;
 	private JTextField txtGiaTien;
 	
 	private List<Sach> listsach = new ArrayList<Sach>();
@@ -219,7 +220,7 @@ public class Panel_QLSach extends JPanel implements ActionListener, MouseListene
 		btn_Thoat.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		panel_1.add(btn_Thoat);
 		
-		JButton btn_TimKiem = new JButton("");
+		btn_TimKiem = new JButton("");
 		btn_TimKiem.setBackground(Color.WHITE);
 		btn_TimKiem.setBounds(195, 40, 72, 65);
 		btn_TimKiem.setIcon(new ImageIcon("IMG\\search-30.PNG"));
@@ -257,6 +258,7 @@ public class Panel_QLSach extends JPanel implements ActionListener, MouseListene
 		
 		textField_TiemKiem = new JTextField();
 		textField_TiemKiem.setBounds(277, 41, 319, 65);
+		textField_TiemKiem.setFont(new Font("Times New Roman", Font.PLAIN, 24));
 		panel_1.add(textField_TiemKiem);
 		textField_TiemKiem.setColumns(10);
 		
@@ -359,6 +361,7 @@ public class Panel_QLSach extends JPanel implements ActionListener, MouseListene
 		panel.add(lblTheLoai);
 		
 		cbTheLoai = new JComboBox();
+		cbTheLoai.setBackground(Color.WHITE);
 		cbTheLoai.setBounds(100, 115, 175, 30);
 		panel.add(cbTheLoai);
 		
@@ -371,6 +374,7 @@ public class Panel_QLSach extends JPanel implements ActionListener, MouseListene
 		panel.add(txtTenSach);
 		
 		table.addMouseListener(this);
+		btn_TimKiem.addActionListener(this);
 		loadData();
 		
 	}
@@ -485,7 +489,7 @@ public class Panel_QLSach extends JPanel implements ActionListener, MouseListene
 			super.repaint(); 
 		} else if (o.equals(mn_Dki)) {
 			super.removeAll();
-			Panel_DSDKMuonSach dkMuonSach = new Panel_DSDKMuonSach();
+			Panel_PhieuMuonQuaHan dkMuonSach = new Panel_PhieuMuonQuaHan();
 			dkMuonSach.setBounds(0, 0, super.getWidth(), super.getHeight());
 			super.add(dkMuonSach);
 			super.validate();
@@ -523,37 +527,118 @@ public class Panel_QLSach extends JPanel implements ActionListener, MouseListene
 		}
 		else if (o.equals(btn_ChinhSua)) {
 			if(table.getSelectedRow() != -1) {
-				Sach sach = listsach.get(table.getSelectedRow());
-				SachController sachController = new SachController();
-				sach.setTenSach(txtTenSach.getText());
-				sach.setNhaXuatBan(txtNhaXB.getText());
-				sach.setTacGia(txtTenTacGia.getText());
-				sach.setTenSach(txtTenSach.getText());
-				int sl = Integer.parseInt(txtSoLuong.getText());
-				int gt = Integer.parseInt(txtGiaTien.getText());
-				sach.setSoLuongBanIn(sl);
-				sach.setDonGia(gt);
-				if(!cbTheLoai.getSelectedItem().toString().equalsIgnoreCase("Chưa phân loại")) {
-					sach.setLoaiSach(listLoaiSach.get(cbTheLoai.getSelectedIndex()));
-				}else {
-					sach.setLoaiSach(null);
-				}
-				if(sachController.update(sach)) {
-					clearTextFill();
-					removeRow();
-					loadData();
-					JOptionPane.showMessageDialog(this, "Chỉnh sửa sách thành công");
+				if(valid()) {
+					Sach sach = listsach.get(table.getSelectedRow());
+					SachController sachController = new SachController();
+					sach.setTenSach(txtTenSach.getText());
+					sach.setNhaXuatBan(txtNhaXB.getText());
+					sach.setTacGia(txtTenTacGia.getText());
+					int sl = Integer.parseInt(txtSoLuong.getText());
+					int gt = Integer.parseInt(txtGiaTien.getText());
+					sach.setSoLuongBanIn(sl);
+					sach.setDonGia(gt);
+					if(!cbTheLoai.getSelectedItem().toString().equalsIgnoreCase("Chưa phân loại")) {
+						sach.setLoaiSach(listLoaiSach.get(cbTheLoai.getSelectedIndex()));
+					}else {
+						sach.setLoaiSach(null);
+					}
+					if(sachController.update(sach)) {
+						clearTextFill();
+						removeRow();
+						loadData();
+						JOptionPane.showMessageDialog(this, "Chỉnh sửa sách thành công");
+					}
 				}
 			}else {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 sách cần chỉnh sửa");
 			}
-			
-			
-			
+		}
+		if(o.equals(btn_TimKiem)) {
+//			textField_TiemKiem
+			searchSach();
 		}
 		
-		
 	}
+	public boolean valid() {
+		if(txtTenSach.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Chưa điền tên sách");
+			return false;
+		}
+		if(txtNhaXB.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Chưa điền nhà xuất bản");
+			return false;
+		}
+		if(txtTenTacGia.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Chưa điền tác giả");
+			return false;
+		}
+		if(txtSoLuong.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Chưa điền số lượng");
+			return false;
+		}
+		int sl = Integer.parseInt(txtSoLuong.getText());
+		int gt = Integer.parseInt(txtGiaTien.getText());
+		if(sl < 0) {
+			JOptionPane.showMessageDialog(this, "Số lượng ít nhất phải là 0");
+			return false;
+		}
+		if(txtGiaTien.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Chưa điền giá tiền");
+			return false;
+		}
+		if(gt < 0) {
+			JOptionPane.showMessageDialog(this, "Giá trị ít nhất phải là 0");
+		}
+		return true;
+	}
+	private void searchSach() {
+		// TODO Auto-generated method stub
+		removeRow();
+		int size  = listsach.size();
+		for(int i =0 ; i< size; i++) {
+			listsach.remove(0);
+		}
+		SachController sachController = new SachController();
+		listsach = sachController.searchSach(textField_TiemKiem.getText());
+		if(listsach!=null) {
+			int i = 0;
+			String stt;
+			for(Sach s: listsach) {
+				i++;
+				stt = String.valueOf(i);
+				String loai;
+				if(s.getLoaiSach() != null) {
+					loai = s.getLoaiSach().getTenLoai();
+				}else {
+					loai = "Chưa phân loại";
+				}
+				String namxuatban = s.getNamXuatBan().toString();
+				String dongia = String.valueOf(s.getDonGia());
+				String soluong = String.valueOf(s.getSoLuongBanIn());
+				String [] rowData= {stt,
+						s.getTenSach(),
+						s.getId(),
+						loai, 
+						s.getNhaXuatBan(), 
+						s.getTacGia(),
+						namxuatban,
+						dongia,
+						soluong};
+				tablemodel.addRow(rowData);
+				System.out.println(s.toString());
+			}
+			table.setModel(tablemodel);
+			LoaiSachController loaiSachController = new LoaiSachController();
+			listLoaiSach = loaiSachController.getAllLoaiSach();
+			LoaiSach loaiSach;
+			for(int j = 0; j < listLoaiSach.size(); j++) {
+				loaiSach = listLoaiSach.get(j);
+				cbTheLoai.addItem(loaiSach.getTenLoai());
+			}
+			cbTheLoai.addItem("Chưa phân loại");
+		}
+	}
+
 	public void removeRow() {
 		int size = table.getRowCount();
 		for (int i = 0; i < size; i++) {

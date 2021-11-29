@@ -71,6 +71,15 @@ public class PhieuMuonController {
 		}
 		return listPhieuMuonDaTra;
 	}
+	public List<PhieuMuon> searchPhieuMuon(String keyword){
+		List<PhieuMuon> listPhieuMuonDaTra = new ArrayList<PhieuMuon>();
+		try {
+			listPhieuMuonDaTra = phieuMuonDao.findPhieuMuonByKeyWord(keyword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listPhieuMuonDaTra;
+	}
 	public PhieuMuon getPhieuMuonById(String id) {
 		try {
 			return phieuMuonDao.getPhieuMuonById(id);

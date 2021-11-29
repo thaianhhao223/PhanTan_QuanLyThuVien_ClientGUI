@@ -69,6 +69,7 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 	private JScrollPane scroll;
 
 	private List<Sach> listSach = new ArrayList<Sach>();
+	private ThuThu thuThu = new ThuThu();
 	/**
 	 * Launch the application.
 	 */
@@ -246,8 +247,11 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 		btn_timSach.addActionListener(this);
 		table.addMouseListener(this);
 		
-		txtMaThuThu.setText("ThuThu20211123985775");
 		txt_maDG.setText("DocGia20211123716576");
+		ThuThuController thuThuController = new ThuThuController();
+		thuThu = thuThuController.getInstance();
+		txtMaThuThu.setText(thuThu.getHoTen());
+		txtMaThuThu.setEditable(false);
 	}
 	
 	public void getSach(String id) {
@@ -327,13 +331,6 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 			JOptionPane.showMessageDialog(this, "Sai mã đọc giả");
 			return false;
 		}
-		ThuThuController thuThuController = new ThuThuController();
-		ThuThu thuThu = new ThuThu();
-		thuThu = thuThuController.getThuThuById(txtMaThuThu.getText());
-		if(thuThu ==  null) {
-			JOptionPane.showMessageDialog(this, "Sai mã thủ thư");
-			return false;
-		}
 		if(listSach.size() < 1) {
 			JOptionPane.showMessageDialog(this, "Phải mượn ít nhất 1 sách");
 			return false;
@@ -382,10 +379,6 @@ public class GUI_PhieuMuon extends JFrame implements ActionListener, MouseListen
 				DocGiaController docGiaController = new DocGiaController();
 				DocGia docGia = new DocGia();
 				docGia = docGiaController.getDocGiaById(txt_maDG.getText());
-				
-				ThuThuController thuThuController = new ThuThuController();
-				ThuThu thuThu = new ThuThu();
-				thuThu = thuThuController.getThuThuById(txtMaThuThu.getText());
 				
 				String trangThai = "Chưa trả";
 				Date date = txtField_Ngaymuon.getModel().getDate();

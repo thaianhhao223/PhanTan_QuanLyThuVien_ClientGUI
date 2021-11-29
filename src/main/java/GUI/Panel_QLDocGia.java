@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -116,12 +117,12 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 		});
 		mn_DG.add(mn_Lthe);
 		
-		mn_DSTheHetHan = new JMenuItem("Danh sách thẻ hết hạn");
-		mn_DSTheHetHan.setAccelerator(
-				KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
-		mn_DSTheHetHan.setIcon(new ImageIcon("IMG/card-2.png"));
-		mn_DG.add(mn_DSTheHetHan);
-		mn_DSTheHetHan.addActionListener(this);
+//		mn_DSTheHetHan = new JMenuItem("Danh sách thẻ hết hạn");
+//		mn_DSTheHetHan.setAccelerator(
+//				KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+//		mn_DSTheHetHan.setIcon(new ImageIcon("IMG/card-2.png"));
+//		mn_DG.add(mn_DSTheHetHan);
+//		mn_DSTheHetHan.addActionListener(this);
 		
 		JMenu mn_Sach = new JMenu("Quản lí sách");
 		mn_Sach.setMnemonic(KeyEvent.VK_L);
@@ -161,24 +162,24 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 		});
 		Mn_QLMTS.add(mn_PhieuMuon);
 		
-		mn_Muon = new JMenuItem("Danh Sách mượn sách");
+		mn_Muon = new JMenuItem("Danh sách phiếu mượn");
 		mn_Muon.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_6, ActionEvent.ALT_MASK));
 		mn_Muon.setIcon(new ImageIcon("IMG/add-bookmark.png"));
 		Mn_QLMTS.add(mn_Muon);
 		mn_Muon.addActionListener(this);
 		
-		mn_Tra = new JMenuItem("Danh sách trả sách");
+		mn_Tra = new JMenuItem("Phiếu mượn đã trả");
 		mn_Tra.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_7, ActionEvent.ALT_MASK));
 		mn_Tra.setIcon(new ImageIcon("IMG/bookmark-2.png"));
 		Mn_QLMTS.add(mn_Tra);
 		mn_Tra.addActionListener(this);
 		
-		mn_Dki = new JMenuItem("Đăng kí mượn sách");
+		mn_Dki = new JMenuItem("Phiếu mượn quá hạn");
 		mn_Dki.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_8, ActionEvent.ALT_MASK));
-		mn_Dki.setIcon(new ImageIcon("IMG/add-book-24.png"));
+		mn_Dki.setIcon(new ImageIcon("IMG/card-2.png"));
 		Mn_QLMTS.add(mn_Dki);
 		mn_Dki.addActionListener(this);
 		
@@ -247,12 +248,12 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 		panel_tks.add(btn_ChinhSua);
 		btn_ChinhSua.addActionListener(this);
 		
-		btn_Xoa = new JButton("Xóa");
-		btn_Xoa.setBackground(Color.WHITE);
-		btn_Xoa.setIcon(new ImageIcon("IMG\\delete-30.png"));
-		btn_Xoa.setBounds(676, 40, 136, 66);
-		panel_tks.add(btn_Xoa);
-		btn_Xoa.addActionListener(this);
+//		btn_Xoa = new JButton("Xóa trắng");
+//		btn_Xoa.setBackground(Color.WHITE);
+//		btn_Xoa.setIcon(new ImageIcon("IMG\\delete-30.png"));
+//		btn_Xoa.setBounds(676, 40, 136, 66);
+//		panel_tks.add(btn_Xoa);
+//		btn_Xoa.addActionListener(this);
 		
 		textField_Tim = new JTextField();
 		textField_Tim.setBounds(277, 41, 319, 65);
@@ -343,33 +344,6 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 		txtSDT.setBounds(950, 15, 175, 30);
 		panel.add(txtSDT);
 		
-//		btn_Dg = new JButton("Thông tin độc giả");
-//		btn_Dg.setBackground(Color.WHITE);
-//		btn_Dg.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-//		btn_Dg.setIcon(new ImageIcon("IMG\\user-500.PNG"));
-//		btn_Dg.setBounds(10, 15, 280, 73);
-//		panel.add(btn_Dg);
-//		
-//		btn_Lthe = new JButton("Lập thẻ");
-//		btn_Lthe.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				new GUI.GUI_LapThe().setVisible(true);
-//			}
-//		});
-//		btn_Lthe.setBackground(Color.WHITE);
-//		btn_Lthe.setIcon(new ImageIcon("IMG\\card-500.PNG"));
-//		btn_Lthe.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-//		btn_Lthe.setBounds(300, 15, 280, 73);
-//		panel.add(btn_Lthe);
-//		btn_DSHetHan = new JButton("Danh sách thẻ hết hạn");
-//		btn_DSHetHan.setBackground(Color.WHITE);
-//		btn_DSHetHan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-//		btn_DSHetHan.setIcon(new ImageIcon("IMG\\card-50.PNG"));
-//		btn_DSHetHan.setBounds(590, 15, 280, 73);
-//		panel.add(btn_DSHetHan);
-//		btn_DSHetHan.addActionListener(this);
-		
 	
 		table.addMouseListener(this);
 		
@@ -381,7 +355,7 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 	public void loadData() {
 		DocGiaController docgiaController = new DocGiaController();
 		listdocgia = docgiaController.getAllDocGia();
-		if(listdocgia != null) {
+		if(listdocgia!=null) {
 			int i = 0;
 			String stt;
 			for(DocGia s: listdocgia) {
@@ -489,64 +463,68 @@ public class Panel_QLDocGia extends JPanel implements ActionListener, MouseListe
 			super.validate();
 			super.repaint();
 		}
-		else if (o.equals(btn_Xoa)) {
-			int row = table.getSelectedRow();
-			if (row >= 0) {
-				String id = (String) table.getValueAt(row, 0);
-				if (docgiaController.xoaDGByID(id)) {
-					tablemodel.removeRow(row);
-				}
-			}
-		}
+//		else if (o.equals(btn_Xoa)) {
+//			txtHoTen.setText("");
+//			txtChucVu.setText("");
+//			txtChuyenNganh.setText("");
+//			txtEmail.setText("");
+//			txtSDT.setText("");
+//			txtHoTen.requestFocus();
+//		}
 		else if (o.equals(btn_capnhat)) {
 			tablemodel.setRowCount(0);
 			try {
 				loadData();
+				JOptionPane.showMessageDialog(this, "Cập nhật thành công");
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
 		else if (o.equals(btn_ChinhSua)) {
-			if(table.getSelectedRow() != -1) {
-				DocGia docGia = listdocgia.get(table.getSelectedRow());
-				DocGiaController docGiaController = new DocGiaController();
-				docGia.setHoTen(txtHoTen.getText());
-				docGia.setChucVu(txtChucVu.getText());
-				docGia.setChuyenNganh(txtChuyenNganh.getText());
-				docGia.setEmail(txtEmail.getText());
-				docGia.setSoDienThoai(txtSDT.getText());
-				if(docGiaController.update(docGia)) {
-					clearTextFill();
-					removeRow();
-					loadData();
-				}
-			}else {
-				JOptionPane.showMessageDialog(this, "Vui lòng chọn một đọc giả để chỉnh sửa!");
+			
+			DocGia docGia = listdocgia.get(table.getSelectedRow());
+			DocGiaController docGiaController = new DocGiaController();
+			docGia.setHoTen(txtHoTen.getText());
+			docGia.setChucVu(txtChucVu.getText());
+			docGia.setChuyenNganh(txtChuyenNganh.getText());
+			docGia.setEmail(txtEmail.getText());
+			docGia.setSoDienThoai(txtSDT.getText());
+			
+			if(docGiaController.update(docGia)) {
+				clearTextFill();
+				removeRow();
+				loadData();
+				JOptionPane.showMessageDialog(this, "Sửa thành công");
 			}
+
 		}
 	}
 	
 	public void removeRow() {
-		for (int i = 0; i < table.getRowCount(); i++) {
-			tablemodel.removeRow(i);
+		int size = table.getRowCount();
+		for (int i = 0; i < size; i++) {
+			tablemodel.removeRow(0);
 		}
 		table.setModel(tablemodel);
 	}
+	
 	public void clearTextFill() {
+		txtHoTen.setText("");
 		txtChucVu.setText("");
 		txtChuyenNganh.setText("");
 		txtEmail.setText("");
-		txtHoTen.setText("");
 		txtSDT.setText("");
+		txtHoTen.requestFocus();
 	}
+
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource().equals(table)) {
 			int row = table.getSelectedRow();
-			txtHoTen.setText(tablemodel.getValueAt(row, 1).toString());
-			txtChucVu.setText(tablemodel.getValueAt(row, 2).toString());
-			txtChuyenNganh.setText(tablemodel.getValueAt(row, 3).toString());
-			txtEmail.setText(tablemodel.getValueAt(row, 4).toString());
-			txtSDT.setText(tablemodel.getValueAt(row, 5).toString());
+			txtHoTen.setText(table.getValueAt(row, 1).toString());
+			txtChucVu.setText(table.getValueAt(row, 2).toString());
+			txtChuyenNganh.setText(table.getValueAt(row, 3).toString());
+			txtEmail.setText(table.getValueAt(row, 4).toString());
+			txtSDT.setText(table.getValueAt(row, 5).toString());
 		}
 	}
 

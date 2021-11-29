@@ -452,6 +452,7 @@ public class GUI_EditPhieuMuon extends JFrame implements ActionListener, MouseLi
 					}
 					JOptionPane.showMessageDialog(this, "Chỉnh sửa phiếu mượn thành công!");
 					clearData();
+					this.dispose();
 				}else {
 					JOptionPane.showMessageDialog(this, "Chỉnh sửa phiếu mượn thất bại! Vui lòng thử lại");
 				}

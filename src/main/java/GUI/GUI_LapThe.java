@@ -108,7 +108,7 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 		
 		tf_ten = new JTextField();
 		tf_ten.setForeground(Color.BLACK);
-		tf_ten.setFont(new Font("Arial", Font.PLAIN, 18));
+		tf_ten.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		tf_ten.setColumns(10);
 		tf_ten.setBackground(Color.WHITE);
 		tf_ten.setBounds(197, 78, 304, 30);
@@ -137,7 +137,7 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 		btn_xacnhan = new JButton("Xác nhận");
 		btn_xacnhan.addActionListener(this);
 		btn_xacnhan.setIcon(new ImageIcon("IMG\\check.png"));
-		btn_xacnhan.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_xacnhan.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btn_xacnhan.setBackground(Color.WHITE);
 		btn_xacnhan.setBounds(210, 450, 126, 34);
 		contentPane_1.add(btn_xacnhan);
@@ -147,13 +147,13 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 		btn_huy.addActionListener(this);
 		btn_huy.setBackground(Color.WHITE);
 		btn_huy.setIcon(new ImageIcon("IMG\\cancel.png"));
-		btn_huy.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_huy.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btn_huy.setBounds(360, 450, 119, 34);
 		contentPane_1.add(btn_huy);
 		
 		textField_chucvu = new JTextField();
 		textField_chucvu.setForeground(Color.BLACK);
-		textField_chucvu.setFont(new Font("Arial", Font.PLAIN, 18));
+		textField_chucvu.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		textField_chucvu.setColumns(10);
 		textField_chucvu.setBackground(Color.WHITE);
 		textField_chucvu.setBounds(197, 142, 304, 30);
@@ -168,7 +168,7 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 //		contentPane_1.add(comboBox_Lop);
 		
 		textField_Email = new JTextField();
-		textField_Email.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		textField_Email.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		textField_Email.setBounds(197, 267, 304, 32); //197, 402, 304, 34
 		contentPane_1.add(textField_Email);
 		
@@ -193,7 +193,34 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 		contentPane_1.add(txtChuyenNganh);
 		
 	}
-
+	public boolean valid() {
+		if(tf_ten.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập tên");
+			return false;
+		}
+		if(textField_chucvu.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập chức vụ");
+			return false;
+		}
+		if(txtChuyenNganh.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập chuyên ngành");
+			return false;
+		}
+		if(textField_Email.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
+			return false;
+		}
+		String regex = "\\d+";
+		if(textField_Sdt.getText().length() < 1 && textField_Sdt.getText().matches(regex)) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
+			return false;
+		}
+		if(! textField_Sdt.getText().matches(regex)) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng số điện thoại");
+			return false;
+		}
+		return true;
+	}
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		Field_email = textField_Email.getText();
@@ -203,40 +230,18 @@ public class GUI_LapThe extends JFrame implements ActionListener{
 			dispose();
 		}
 		if (o.equals(btn_xacnhan)) {
-			String email = textField_Email.getText();
-			String ten =tf_ten.getText();
-			String chucvu =textField_chucvu.getText();
-			String sdt =textField_Sdt.getText();
-			String chuyennganh =txtChuyenNganh.getText();
-			
-			DocGia docgia = new DocGia(ten, sdt, email, chucvu, chuyennganh);
-			DocGiaController docGiaController = new DocGiaController();
-			docGiaController.addDocGia(docgia);
-			JOptionPane.showMessageDialog(this, "Lập thẻ độc giả thành công");
+			if(valid()) {
+				String email = textField_Email.getText();
+				String ten =tf_ten.getText();
+				String chucvu =textField_chucvu.getText();
+				String sdt =textField_Sdt.getText();
+				String chuyennganh =txtChuyenNganh.getText();
+				
+				DocGia docgia = new DocGia(ten, sdt, email, chucvu, chuyennganh);
+				DocGiaController docGiaController = new DocGiaController();
+				docGiaController.addDocGia(docgia);
+				JOptionPane.showMessageDialog(this, "Lập thẻ độc giả thành công");
+			}
 		}
-		if(Field_email.equals("")){
-			JOptionPane.showMessageDialog(this, "Bạn chưa nhập email");
-            return;
-        } else {
-        Pattern pattern = Pattern.compile(EMAIL_REG);
-        Matcher matcher = pattern.matcher(Field_email);
-        if(! matcher.matches()){
-        	JOptionPane.showMessageDialog(this, "Email chưa đúng định dạng");
-            return;
-        	}
-        }
-		if(Field_Sdt.equals("")){
-			JOptionPane.showMessageDialog(this, "Bạn chưa nhập số điện thoại");
-            return;
-        } else {
-        Pattern pattern = Pattern.compile(SDT_REG);
-        Matcher matcher = pattern.matcher(Field_Sdt);
-        if(! matcher.matches()){
-        	JOptionPane.showMessageDialog(this, "Số điện thoại chưa đúng định dạng");
-            return;
-        	}
-		
-        }
-		
 	}
 }

@@ -10,7 +10,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -29,10 +32,15 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import com.toedter.calendar.JDateChooser;
+
+import controller.LoaiSachController;
 import controller.SachController;
+import entity.LoaiSach;
 import entity.Sach;
 
-public class Panel_QLSach extends JPanel implements ActionListener{
+public class Panel_QLSach extends JPanel implements ActionListener, MouseListener{
+
 	private JPanel contentPane;
 	private JMenu mn_thanhtoan;
 	private JTextField textField_TiemKiem;
@@ -54,8 +62,15 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 	private JTextField txtTenSach;
 	private JTextField txtTenTacGia;
 	private JTextField txtNhaXB;
-	private JTextField txtNgayXB;
+	private JDateChooser txtNgayXB;
 	private JTextField txtSoLuong;
+	private JButton btn_ChinhSua;
+	private JButton btn_capnhat;
+	private JTextField txtGiaTien;
+	
+	private List<Sach> listsach = new ArrayList<Sach>();
+	private List<LoaiSach> listLoaiSach = new ArrayList<LoaiSach>();
+	private JComboBox cbTheLoai;
 
 	/**
 	 * Create the panel.
@@ -102,12 +117,12 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 		});
 		mn_DG.add(mn_Lthe);
 		
-		mn_DSTheHetHan = new JMenuItem("Danh sách thẻ hết hạn");
-		mn_DSTheHetHan.setAccelerator(
-				KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
-		mn_DSTheHetHan.setIcon(new ImageIcon("IMG/card-2.png"));
-		mn_DG.add(mn_DSTheHetHan);
-		mn_DSTheHetHan.addActionListener(this);
+//		mn_DSTheHetHan = new JMenuItem("Danh sách thẻ hết hạn");
+//		mn_DSTheHetHan.setAccelerator(
+//				KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+//		mn_DSTheHetHan.setIcon(new ImageIcon("IMG/card-2.png"));
+//		mn_DG.add(mn_DSTheHetHan);
+//		mn_DSTheHetHan.addActionListener(this);
 		
 		JMenu mn_Sach = new JMenu("Quản lí sách");
 		mn_Sach.setMnemonic(KeyEvent.VK_L);
@@ -149,24 +164,24 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 		});
 		Mn_QLMTS.add(mn_PhieuMuon);
 		
-		mn_MuonSach = new JMenuItem("Danh Sách mượn sách");
+		mn_MuonSach = new JMenuItem("Danh sách phiếu mượn");
 		mn_MuonSach.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_6, ActionEvent.ALT_MASK));
 		mn_MuonSach.setIcon(new ImageIcon("IMG/add-bookmark.png"));
 		Mn_QLMTS.add(mn_MuonSach);
 		mn_MuonSach.addActionListener(this);
 		
-		mn_Tra = new JMenuItem("Danh sách trả sách");
+		mn_Tra = new JMenuItem("Phiếu mượn đã trả");
 		mn_Tra.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_7, ActionEvent.ALT_MASK));
 		mn_Tra.setIcon(new ImageIcon("IMG/bookmark-2.png"));
 		Mn_QLMTS.add(mn_Tra);
 		mn_Tra.addActionListener(this);
 		
-		mn_Dkisach = new JMenuItem("Đăng kí mượn sách");
+		mn_Dkisach = new JMenuItem("Phiếu mượn quá hạn");
 		mn_Dkisach.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_8, ActionEvent.ALT_MASK));
-		mn_Dkisach.setIcon(new ImageIcon("IMG/add-book-24.png"));
+		mn_Dkisach.setIcon(new ImageIcon("IMG/card-2.png"));
 		Mn_QLMTS.add(mn_Dkisach);
 		mn_Dkisach.addActionListener(this);
 		
@@ -218,25 +233,27 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 		btn_TieuDe.setBackground(new Color(144, 238, 144));
 		panel_1.add(btn_TieuDe);
 		
-		JButton btn_capnhat = new JButton("Cập nhật");
+		btn_capnhat = new JButton("Cập nhật");
 		btn_capnhat.setBackground(Color.WHITE);
 		btn_capnhat.setBounds(968, 40, 136, 65);
 		btn_capnhat.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btn_capnhat.setIcon(new ImageIcon("IMG\\update-30.png"));
 		panel_1.add(btn_capnhat);
+		btn_capnhat.addActionListener(this);
 		
-		JButton btn_ChinhSua = new JButton("Chỉnh sửa");
+		btn_ChinhSua = new JButton("Chỉnh sửa");
 		btn_ChinhSua.setBackground(Color.WHITE);
 		btn_ChinhSua.setIcon(new ImageIcon("IMG\\edit-30.png"));
 		btn_ChinhSua.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btn_ChinhSua.setBounds(822, 40, 136, 65);
 		panel_1.add(btn_ChinhSua);
+		btn_ChinhSua.addActionListener(this);
 		
-		JButton btn_Xoa = new JButton("Xóa");
-		btn_Xoa.setBackground(Color.WHITE);
-		btn_Xoa.setIcon(new ImageIcon("IMG\\delete-30.png"));
-		btn_Xoa.setBounds(676, 40, 136, 66);
-		panel_1.add(btn_Xoa);
+//		JButton btn_Xoa = new JButton("Xóa");
+//		btn_Xoa.setBackground(Color.WHITE);
+//		btn_Xoa.setIcon(new ImageIcon("IMG\\delete-30.png"));
+//		btn_Xoa.setBounds(676, 40, 136, 66);
+//		panel_1.add(btn_Xoa);
 		
 		textField_TiemKiem = new JTextField();
 		textField_TiemKiem.setBounds(277, 41, 319, 65);
@@ -254,12 +271,6 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 		
 		scroll.setBounds(10, 300, 1261, 388);
 		add(scroll);
-		
-//		JPanel panel_2 = new JPanel();
-//		panel_2.setBackground(SystemColor.inactiveCaptionBorder);
-//		panel_2.setBounds(10, 22, 1261, 95);
-//		add(panel_2);
-//		panel_2.setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(SystemColor.inactiveCaptionBorder);
@@ -311,10 +322,7 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 		lblNgayXB.setBounds(400, 70, 175, 15);
 		panel.add(lblNgayXB);
 		
-		txtNgayXB = new JTextField();
-		txtNgayXB.setForeground(Color.BLACK);
-		txtNgayXB.setFont(new Font("Arial", Font.PLAIN, 18));
-		txtNgayXB.setColumns(10);
+		txtNgayXB = new JDateChooser();
 		txtNgayXB.setBackground(Color.WHITE);
 		txtNgayXB.setBounds(550, 65, 175, 30);
 		panel.add(txtNgayXB);
@@ -324,13 +332,13 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 		lblGiaTien.setBounds(800, 20, 175, 15);
 		panel.add(lblGiaTien);
 		
-		txtSoLuong = new JTextField();
-		txtSoLuong.setForeground(Color.BLACK);
-		txtSoLuong.setFont(new Font("Arial", Font.PLAIN, 18));
-		txtSoLuong.setColumns(10);
-		txtSoLuong.setBackground(Color.WHITE);
-		txtSoLuong.setBounds(950, 15, 175, 30);
-		panel.add(txtSoLuong);
+		txtGiaTien = new JTextField();
+		txtGiaTien.setForeground(Color.BLACK);
+		txtGiaTien.setFont(new Font("Arial", Font.PLAIN, 18));
+		txtGiaTien.setColumns(10);
+		txtGiaTien.setBackground(Color.WHITE);
+		txtGiaTien.setBounds(950, 15, 175, 30);
+		panel.add(txtGiaTien);
 		
 		JLabel lblSoLuong = new JLabel("Số Lượng:");
 		lblSoLuong.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -350,7 +358,7 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 		lblTheLoai.setBounds(10, 120, 175, 15);
 		panel.add(lblTheLoai);
 		
-		JComboBox cbTheLoai = new JComboBox();
+		cbTheLoai = new JComboBox();
 		cbTheLoai.setBounds(100, 115, 175, 30);
 		panel.add(cbTheLoai);
 		
@@ -362,27 +370,7 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 		txtTenSach.setBounds(100, 15, 175, 30);
 		panel.add(txtTenSach);
 		
-//		JButton btn_KhoSach = new JButton("Kho sách");
-//		btn_KhoSach.setBackground(Color.WHITE);
-//		btn_KhoSach.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-//		btn_KhoSach.setIcon(new ImageIcon("IMG\\books-50.PNG"));
-//		btn_KhoSach.setBounds(10, 15, 280, 73);
-//		panel_2.add(btn_KhoSach);
-//		
-//		JButton btn_BoSungSach = new JButton("Bổ sung sách");
-//		btn_BoSungSach.setBackground(Color.WHITE);
-//		btn_BoSungSach.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				new GUI.GUI_ThemSach().setVisible(true);
-//			}
-//		});
-//		btn_BoSungSach.setIcon(new ImageIcon("IMG\\add-book-50.PNG"));
-//		btn_BoSungSach.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-//		btn_BoSungSach.setBounds(300, 15, 280, 73);
-//		panel_2.add(btn_BoSungSach);
-		
-		
+		table.addMouseListener(this);
 		loadData();
 		
 	}
@@ -411,14 +399,19 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 	}
 	public void loadData() {
 		SachController sachController = new SachController();
-		List<Sach> sach = sachController.getAllSach();
-		if(sach!=null) {
+		listsach = sachController.getAllSach();
+		if(listsach!=null) {
 			int i = 0;
 			String stt;
-			for(Sach s: sach) {
+			for(Sach s: listsach) {
 				i++;
 				stt = String.valueOf(i);
-				String loai = "rỗng"; // loaisachcontroller.getloaisachbyid(s.getloaisach)
+				String loai;
+				if(s.getLoaiSach() != null) {
+					loai = s.getLoaiSach().getTenLoai();
+				}else {
+					loai = "Chưa phân loại";
+				}
 				String namxuatban = s.getNamXuatBan().toString();
 				String dongia = String.valueOf(s.getDonGia());
 				String soluong = String.valueOf(s.getSoLuongBanIn());
@@ -435,6 +428,14 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 				System.out.println(s.toString());
 			}
 			table.setModel(tablemodel);
+			LoaiSachController loaiSachController = new LoaiSachController();
+			listLoaiSach = loaiSachController.getAllLoaiSach();
+			LoaiSach loaiSach;
+			for(int j = 0; j < listLoaiSach.size(); j++) {
+				loaiSach = listLoaiSach.get(j);
+				cbTheLoai.addItem(loaiSach.getTenLoai());
+			}
+			cbTheLoai.addItem("Chưa phân loại");
 		}
 	}
 
@@ -511,7 +512,107 @@ public class Panel_QLSach extends JPanel implements ActionListener{
 			super.validate();
 			super.repaint();
 		}
+		else if (o.equals(btn_capnhat)) {
+			tablemodel.setRowCount(0);
+			try {
+				loadData();
+				JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		else if (o.equals(btn_ChinhSua)) {
+			if(table.getSelectedRow() != -1) {
+				Sach sach = listsach.get(table.getSelectedRow());
+				SachController sachController = new SachController();
+				sach.setTenSach(txtTenSach.getText());
+				sach.setNhaXuatBan(txtNhaXB.getText());
+				sach.setTacGia(txtTenTacGia.getText());
+				sach.setTenSach(txtTenSach.getText());
+				int sl = Integer.parseInt(txtSoLuong.getText());
+				int gt = Integer.parseInt(txtGiaTien.getText());
+				sach.setSoLuongBanIn(sl);
+				sach.setDonGia(gt);
+				if(!cbTheLoai.getSelectedItem().toString().equalsIgnoreCase("Chưa phân loại")) {
+					sach.setLoaiSach(listLoaiSach.get(cbTheLoai.getSelectedIndex()));
+				}else {
+					sach.setLoaiSach(null);
+				}
+				if(sachController.update(sach)) {
+					clearTextFill();
+					removeRow();
+					loadData();
+					JOptionPane.showMessageDialog(this, "Chỉnh sửa sách thành công");
+				}
+			}else {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 sách cần chỉnh sửa");
+			}
+			
+			
+			
+		}
 		
+		
+	}
+	public void removeRow() {
+		int size = table.getRowCount();
+		for (int i = 0; i < size; i++) {
+			tablemodel.removeRow(0);
+		}
+		table.setModel(tablemodel);
+	}
+	
+	public void clearTextFill() {
+		txtTenSach.setText("");
+		txtTenTacGia.setText("");
+		txtSoLuong.setText("");
+		txtNhaXB.setText("");
+		txtGiaTien.setText("");
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource().equals(table)) {
+			int row = table.getSelectedRow();
+			txtTenSach.setText(table.getValueAt(row, 1).toString());
+//			cbTheLoai.setSelectedIndex(table.getValueAt(row, 3).toString());
+			txtNhaXB.setText(table.getValueAt(row, 4).toString());
+			txtTenTacGia.setText(table.getValueAt(row, 5).toString());
+			txtGiaTien.setText(table.getValueAt(row, 7).toString());
+			txtSoLuong.setText(table.getValueAt(row, 8).toString());
+			txtNgayXB.setDate(listsach.get(row).getNamXuatBan());
+			for (int i = 0; i < cbTheLoai.getItemCount(); i++) {
+				if(listsach.get(row).getLoaiSach() == null) {
+					cbTheLoai.setSelectedIndex(cbTheLoai.getItemCount()-1);
+					break;
+				}
+				if(listsach.get(row).getLoaiSach().getTenLoai()
+						.equalsIgnoreCase(cbTheLoai.getItemAt(i).toString()))
+				{
+					cbTheLoai.setSelectedIndex(i);
+					break;
+				}
+			}
+		}
+		
+	}
+
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

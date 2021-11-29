@@ -7,8 +7,9 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,15 +44,15 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 	private JTextField textField_SL;
 	private JTextField tf_NhaSx;
 	private JTextField textField_GiaTien;
-	private JComboBox comboBox_TheLoai;
 	private JButton btn_huy;
 	private JButton btn_xacnhan;
 	private JDateChooser dateChooser;
 	private String Ngay;
 	private String SLa;
 	private String double1;
+	private JComboBox comboBox_TheLoai;
+	private List<LoaiSach> listLoaiSach;
 
-	private List<LoaiSach> listLoaiSach = new ArrayList<LoaiSach>();
 	/**
 	 * Launch the application.
 	 */
@@ -111,14 +112,14 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 		
 		tf_tenSach = new JTextField();
 		tf_tenSach.setForeground(Color.BLACK);
-		tf_tenSach.setFont(new Font("Arial", Font.PLAIN, 18));
+		tf_tenSach.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		tf_tenSach.setColumns(10);
 		tf_tenSach.setBackground(Color.WHITE);
 		tf_tenSach.setBounds(169, 11, 336, 30);
 		panel_2.add(tf_tenSach);
 		
 		JLabel lbl_TheLoai = new JLabel("Thể loại:");
-		lbl_TheLoai.setFont(new Font("Arial", Font.PLAIN, 16));
+		lbl_TheLoai.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_TheLoai.setBounds(21, 77, 166, 30);
 		panel_2.add(lbl_TheLoai);
 		
@@ -139,7 +140,7 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 		
 		tf_TenTg = new JTextField();
 		tf_TenTg.setForeground(Color.BLACK);
-		tf_TenTg.setFont(new Font("Arial", Font.PLAIN, 18));
+		tf_TenTg.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		tf_TenTg.setColumns(10);
 		tf_TenTg.setBackground(Color.WHITE);
 		tf_TenTg.setBounds(169, 152, 336, 30);
@@ -147,7 +148,7 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 		
 		btn_xacnhan = new JButton("Xác nhận");
 		btn_xacnhan.setIcon(new ImageIcon("IMG\\check.png"));
-		btn_xacnhan.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_xacnhan.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btn_xacnhan.setBackground(Color.WHITE);
 		btn_xacnhan.setBounds(210, 528, 155, 34);
 		panel_2.add(btn_xacnhan);
@@ -156,7 +157,7 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 		btn_huy = new JButton("Hủy");
 		btn_huy.addActionListener(this);
 		btn_huy.setIcon(new ImageIcon("IMG\\cancel.png"));
-		btn_huy.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_huy.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btn_huy.setBackground(Color.WHITE);
 		btn_huy.setBounds(392, 528, 89, 34);
 		panel_2.add(btn_huy);
@@ -164,20 +165,20 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 		
 		textField_SL = new JTextField();
 		textField_SL.setForeground(Color.BLACK);
-		textField_SL.setFont(new Font("Arial", Font.PLAIN, 18));
+		textField_SL.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		textField_SL.setColumns(10);
 		textField_SL.setBackground(Color.WHITE);
 		textField_SL.setBounds(169, 465, 336, 30);
 		panel_2.add(textField_SL);
 		
 		JLabel lbl_GiaTien = new JLabel("Giá tiền:");
-		lbl_GiaTien.setFont(new Font("Arial", Font.PLAIN, 16));
+		lbl_GiaTien.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_GiaTien.setBounds(21, 385, 166, 30);
 		panel_2.add(lbl_GiaTien);
 		
 		tf_NhaSx = new JTextField();
 		tf_NhaSx.setForeground(Color.BLACK);
-		tf_NhaSx.setFont(new Font("Arial", Font.PLAIN, 18));
+		tf_NhaSx.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		tf_NhaSx.setColumns(10);
 		tf_NhaSx.setBackground(Color.WHITE);
 		tf_NhaSx.setBounds(171, 234, 334, 30);
@@ -188,22 +189,76 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 		panel_2.add(dateChooser);
 		
 		JLabel lbl_SL = new JLabel("Số lượng:");
-		lbl_SL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbl_SL.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lbl_SL.setBounds(21, 465, 81, 30);
 		panel_2.add(lbl_SL);
 		
 		textField_GiaTien = new JTextField();
 		textField_GiaTien.setBounds(169, 385, 336, 30);
+		textField_GiaTien.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		panel_2.add(textField_GiaTien);
 		textField_GiaTien.setColumns(10);
 		
 		comboBox_TheLoai = new JComboBox();
 		comboBox_TheLoai.setBounds(169, 75, 336, 30);
+		comboBox_TheLoai.setBackground(Color.WHITE);
 		panel_2.add(comboBox_TheLoai);
-		
 		loadData();
+		
 	}
-
+	
+	public void loadData() {
+		LoaiSachController loaiSachController = new LoaiSachController();
+		listLoaiSach = loaiSachController.getAllLoaiSach();
+		LoaiSach loaiSach;
+		for (int i = 0; i < listLoaiSach.size(); i++) {
+			loaiSach = listLoaiSach.get(i);
+			comboBox_TheLoai.addItem(loaiSach.getTenLoai());
+		}
+		comboBox_TheLoai.addItem("Chưa phân loại");
+	}
+	
+	
+	public void clearData() {
+		Date date = Calendar.getInstance().getTime();
+		dateChooser.setDate(date);
+		textField_GiaTien.setText("");
+		textField_SL.setText("");
+		tf_NhaSx.setText("");
+		tf_tenSach.setText("");
+		tf_TenTg.setText("");
+	}
+	public boolean valid() {
+		//kiểm tra tính hợp lệ dữ liệu
+		if (tf_tenSach.getText().length() < 1){
+            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tên sách");
+            return false;
+        }
+		if (tf_TenTg.getText().length() < 1){
+            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tên tác giả");
+            return false;
+        }  
+		if (tf_NhaSx.getText().length() < 1){
+            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tên nhà xuất bản");
+            return false;
+        }  
+		Date date = Calendar.getInstance().getTime();
+		if (dateChooser.getModel().getDate().after(date)){
+            JOptionPane.showMessageDialog(this, "Bạn vui lòng chọn ngày xuất bản cho chính xác");
+            return false;
+        }
+		int giatien = Integer.parseInt(textField_GiaTien.getText());
+		if (giatien < 0){
+            JOptionPane.showMessageDialog(this, "Bạn vui lòng nhập giá tiền cho chính xác (nhập 0 nếu là sách quyên tặng)");
+            return false;
+        }  
+		int sl = Integer.parseInt(textField_SL.getText()) ;
+		if (sl <= 1){
+            JOptionPane.showMessageDialog(this, "Bạn vui lòng nhập số lượng cho chính xác (lớn hơn 0)");
+            return false;
+        }  
+		return true;
+	}
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		SLa = textField_SL.getText();
@@ -214,65 +269,33 @@ public class GUI_ThemSach extends JFrame implements ActionListener{
 			dispose();
 		}
 		if (o.equals(btn_xacnhan)) {
-			String tensach = tf_tenSach.getText();
-			String tentg =tf_TenTg.getText();
-			int sl = Integer.parseInt(textField_SL.getText()) ;
-			String tennhasx =tf_NhaSx.getText();
-			int giatien = Integer.parseInt(textField_GiaTien.getText());
-			Date date = dateChooser.getModel().getDate();
-			java.sql.Date ngayXB = new java.sql.Date(date.getTime());
+			if(valid()) {
+				String tensach = tf_tenSach.getText();
+				String tentg =tf_TenTg.getText();
+				int sl = Integer.parseInt(textField_SL.getText()) ;
+				String tennhasx =tf_NhaSx.getText();
+				int giatien = Integer.parseInt(textField_GiaTien.getText());
+				Date date = dateChooser.getModel().getDate();
+				java.sql.Date ngayXB = new java.sql.Date(date.getTime());
+				
+				Sach sach = new Sach(tensach, tentg, ngayXB, tennhasx, giatien, sl);
+				LoaiSachController loaiSachController = new LoaiSachController();
+				
+				if(!comboBox_TheLoai.getSelectedItem().toString().equalsIgnoreCase("Chưa phân loại")) {
+					sach.setLoaiSach(listLoaiSach.get(comboBox_TheLoai.getSelectedIndex()));
+				}else {
+					sach.setLoaiSach(null);
+				}
 			
-			
-			
-			Sach sach = new Sach(tensach, tentg, ngayXB, tennhasx, giatien, sl);
-			sach.setLoaiSach(null);
-			SachController sachController = new SachController();
-			sachController.addSach(sach);
-			JOptionPane.showMessageDialog(this, "Thêm sách thành công");
+				SachController sachController = new SachController();
+				
+				//Thêm sách
+				sachController.addSach(sach);
+				JOptionPane.showMessageDialog(this, "Thêm sách thành công");
+				clearData();
+			}
 			
 		}
-//		if (Ngay.equals("")){
-//            JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày xuất bản");
-//            return;
-//        }else{
-//            Pattern pattern = Pattern.compile(NGAY_REG);
-//            Matcher matcher = pattern.matcher(Ngay);
-//            if(! matcher.matches()){
-//                JOptionPane.showMessageDialog(this, "Bạn nhập ngày xuất bản chưa đúng định dạng (dd/mm/yyyy)");
-//                return;
-//            }
-//        }
-		if (SLa.equals("")){
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập số lượng");
-            return;
-        }else{
-            Pattern pattern = Pattern.compile(SL_REG);
-            Matcher matcher = pattern.matcher(SLa);
-            if(! matcher.matches()){
-                JOptionPane.showMessageDialog(this, "Số lượng là số nguyên dương, từ 0 đến 9");
-                return;
-            }
-        }
-		if (double1.equals("")){
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập giá tiền");
-            return;
-        }else{
-            Pattern pattern = Pattern.compile(DOUBLE_REG);
-            Matcher matcher = pattern.matcher(double1);
-            if(! matcher.matches()){
-                JOptionPane.showMessageDialog(this, "Giá tiền là số dương, từ khoảng 0 đến 9");
-                return;
-            }
-        }
 		
-	}
-	public void loadData() {
-		LoaiSachController loaiSachController = new LoaiSachController();
-		listLoaiSach = loaiSachController.getAllLoaiSach();
-		LoaiSach loaiSach;
-		for(int i = 0; i < listLoaiSach.size(); i++) {
-			loaiSach = listLoaiSach.get(i);
-			comboBox_TheLoai.addItem(loaiSach.getTenLoai());
-		}
 	}
 }

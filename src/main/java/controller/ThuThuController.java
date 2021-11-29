@@ -12,13 +12,18 @@ import entity.ThuThu;
 public class ThuThuController {
 	SecurityManager securityManager = System.getSecurityManager();
 	ThuThuDao thuThuDao;
+	private static ThuThu instance;
+	public static ThuThu getInstance() {
+		return instance;
+	}
+	public static void setInstance(ThuThu instance) {
+		ThuThuController.instance = instance;
+	}
 	public ThuThuController() {
 		if(securityManager == null) {
 			System.setProperty("java.security.policy", "policy/policy.policy");
 			System.setSecurityManager(new SecurityManager());
-			
 		}
-		
 		try {
 			thuThuDao = (ThuThuDao) Naming.lookup("rmi://localhost:1099/thuThuDao");
 		} catch (MalformedURLException e) {
@@ -35,6 +40,15 @@ public class ThuThuController {
 	public ThuThu getThuThuById(String id) {
 		try {
 			return thuThuDao.getThuThuById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public ThuThu getThuThuByAccount(String account, String password) {
+		try {
+			instance = thuThuDao.getThuThuByAccount(account, password);
+			return instance;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

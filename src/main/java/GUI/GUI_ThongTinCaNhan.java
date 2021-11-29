@@ -7,6 +7,8 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,16 +18,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import controller.ThuThuController;
+import entity.DocGia;
+import entity.ThuThu;
 
 public class GUI_ThongTinCaNhan extends JFrame implements ActionListener{
 
 	public static final String EMAIL_REG = "^\\w+@[a-z]+.[a-z]{2,4}+$";
 	public static final String SDT_REG = "\\d{3}\\d{2}\\d{5}";
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtHoTen;
 	private JTextField txtDiaChi;
 	private JTextField txtSDT;
 	private JTextField txtEmail;
@@ -33,6 +42,10 @@ public class GUI_ThongTinCaNhan extends JFrame implements ActionListener{
 	private String Field_email;
 	private String Field_Sdt;
 	private JButton btn_ChinhSua;
+	private List<ThuThu> thuThu = new ArrayList<ThuThu>();
+	private JTable table;
+	private DefaultTableModel tablemodel;
+	private JScrollPane scroll;
 
 	/**
 	 * Launch the application.
@@ -89,43 +102,43 @@ public class GUI_ThongTinCaNhan extends JFrame implements ActionListener{
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lbl_ma = new JLabel("Mã thủ thư:");
+		JLabel lbl_ma = new JLabel("Tên thủ thư:");
 		lbl_ma.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		lbl_ma.setBounds(23, 10, 129, 37);
+		lbl_ma.setBounds(23, 180, 129, 37);
 		panel_2.add(lbl_ma);
 		
 		JLabel lbl_Dchi = new JLabel("Địa chỉ:");
 		lbl_Dchi.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		lbl_Dchi.setBounds(23, 134, 129, 37);
+		lbl_Dchi.setBounds(23, 240, 129, 37);
 		panel_2.add(lbl_Dchi);
 		
 		JLabel lbl_Sdt = new JLabel("Số điện thoại:");
 		lbl_Sdt.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		lbl_Sdt.setBounds(23, 250, 129, 37);
+		lbl_Sdt.setBounds(23, 300, 129, 37);
 		panel_2.add(lbl_Sdt);
 		
 		JLabel lbl_email = new JLabel("Email:");
 		lbl_email.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		lbl_email.setBounds(23, 371, 129, 37);
+		lbl_email.setBounds(23, 360, 129, 37);
 		panel_2.add(lbl_email);
 		
-		textField = new JTextField();
-		textField.setBounds(203, 11, 286, 37);
-		panel_2.add(textField);
-		textField.setColumns(10);
+		txtHoTen = new JTextField();
+		txtHoTen.setBounds(203, 180, 286, 37);
+		panel_2.add(txtHoTen);
+		txtHoTen.setColumns(10);
 		
 		txtDiaChi = new JTextField();
-		txtDiaChi.setBounds(203, 134, 286, 37);
+		txtDiaChi.setBounds(203, 240, 286, 37);
 		panel_2.add(txtDiaChi);
 		txtDiaChi.setColumns(10);
 		
 		txtSDT = new JTextField();
-		txtSDT.setBounds(203, 250, 286, 37);
+		txtSDT.setBounds(203, 300, 286, 37);
 		panel_2.add(txtSDT);
 		txtSDT.setColumns(10);
 		
 		txtEmail = new JTextField();
-		txtEmail.setBounds(203, 371, 286, 37);
+		txtEmail.setBounds(203, 360, 286, 37);
 		panel_2.add(txtEmail);
 		txtEmail.setColumns(10);
 		
@@ -149,8 +162,17 @@ public class GUI_ThongTinCaNhan extends JFrame implements ActionListener{
 		btn_ChinhSua.setBounds(122, 18, 133, 38);
 		panel_3.add(btn_ChinhSua);
 		btn_ChinhSua.addActionListener(this);
-		
+		loadData();
 	}
+	
+	public void loadData() {
+		ThuThuController thuThuController = new ThuThuController();
+//		thuThu = thuThuController.getThuThu();
+//		txtHoTen.setText(new ThuThu().getHoTen());
+//		System.out.print(txtHoTen);
+//	
+	}
+
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();

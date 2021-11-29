@@ -111,12 +111,12 @@ public class Panel_DSTraSach extends JPanel implements ActionListener{
 		});
 		mn_DG.add(mn_Lthe);
 		
-		mn_DSTheHetHan = new JMenuItem("Danh sách thẻ hết hạn");
-		mn_DSTheHetHan.setAccelerator(
-				KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
-		mn_DSTheHetHan.setIcon(new ImageIcon("IMG/card-2.png"));
-		mn_DG.add(mn_DSTheHetHan);
-		mn_DSTheHetHan.addActionListener(this);
+//		mn_DSTheHetHan = new JMenuItem("Danh sách thẻ hết hạn");
+//		mn_DSTheHetHan.setAccelerator(
+//				KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+//		mn_DSTheHetHan.setIcon(new ImageIcon("IMG/card-2.png"));
+//		mn_DG.add(mn_DSTheHetHan);
+//		mn_DSTheHetHan.addActionListener(this);
 		
 		JMenu mn_Sach = new JMenu("Quản lí sách");
 		mn_Sach.setMnemonic(KeyEvent.VK_L);
@@ -158,24 +158,24 @@ public class Panel_DSTraSach extends JPanel implements ActionListener{
 		});
 		Mn_QLMTS.add(mn_PhieuMuon);
 		
-		mn_Muon = new JMenuItem("Danh Sách mượn sách");
+		mn_Muon = new JMenuItem("Danh sách phiếu mượn");
 		mn_Muon.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_6, ActionEvent.ALT_MASK));
 		mn_Muon.setIcon(new ImageIcon("IMG/add-bookmark.png"));
 		Mn_QLMTS.add(mn_Muon);
 		mn_Muon.addActionListener(this);
 		
-		mn_Tra = new JMenuItem("Danh sách trả sách");
+		mn_Tra = new JMenuItem("Phiếu mượn đã trả");
 		mn_Tra.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_7, ActionEvent.ALT_MASK));
 		mn_Tra.setIcon(new ImageIcon("IMG/bookmark-2.png"));
 		Mn_QLMTS.add(mn_Tra);
 		mn_Tra.addActionListener(this);
 		
-		mn_Dki = new JMenuItem("Đăng kí mượn sách");
+		mn_Dki = new JMenuItem("Phiếu mượn quá hạn");
 		mn_Dki.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_8, ActionEvent.ALT_MASK));
-		mn_Dki.setIcon(new ImageIcon("IMG/add-book-24.png"));
+		mn_Dki.setIcon(new ImageIcon("IMG/card-2.png"));
 		Mn_QLMTS.add(mn_Dki);
 		mn_Dki.addActionListener(this);
 		

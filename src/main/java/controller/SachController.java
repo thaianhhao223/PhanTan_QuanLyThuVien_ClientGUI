@@ -34,6 +34,15 @@ public class SachController {
 			e.printStackTrace();
 		}
 	}
+	
+	public boolean update(Sach sach) {
+		try {
+			return sachDao.updateSach(sach);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	public boolean xoaSach(String id) {
 		try {
 			return sachDao.deleteSachById(id);

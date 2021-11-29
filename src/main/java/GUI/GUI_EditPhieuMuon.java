@@ -335,7 +335,7 @@ public class GUI_EditPhieuMuon extends JFrame implements ActionListener, MouseLi
 				i++;
 				stt = String.valueOf(i);
 				if(s != null) {
-					String sl = String.valueOf(1);
+					String sl = String.valueOf(listCTPM.get(i-1).getSoLuong());
 					String [] rowData= {stt,
 										s.getId(), 
 										s.getTenSach(), 
@@ -431,6 +431,7 @@ public class GUI_EditPhieuMuon extends JFrame implements ActionListener, MouseLi
 				//chiTietPhieuMuonController.deleteAllChiTietPhieuMuonByPhieuMuonId(phieuMuon.getId());
 				String phieuMuonId = phieuMuon.getId();
 				if(phieuMuonId != null && phieuMuon != null) {
+					muonController.updatePhieuMuon(phieuMuon);
 					ChiTietPhieuMuon chiTietPhieuMuon = new ChiTietPhieuMuon();
 					chiTietPhieuMuon.setPhieuMuon(phieuMuon);
 					int soLuong;
@@ -488,11 +489,11 @@ public class GUI_EditPhieuMuon extends JFrame implements ActionListener, MouseLi
 		ChiTietPhieuMuonController chiTietPhieuMuonController = new ChiTietPhieuMuonController();
 		if(listSachCTPM != null) {
 			if(listSachCTPM.size() > 0 && listSachCTPM.contains(chiTietPhieuMuon.getSach())) {
-				chiTietPhieuMuonController.updateChiTietPhieuMuon(chiTietPhieuMuon);
-				System.out.println("Cập nhật CTPM thành công - "+chiTietPhieuMuon.getSach().toString());
+				String ktr = chiTietPhieuMuonController.updateChiTietPhieuMuon(chiTietPhieuMuon);
+				System.out.println(ktr +" - "+chiTietPhieuMuon.getSach().toString());
 			}
 			if(listSachCTPM.size() == 0 || !listSachCTPM.contains(chiTietPhieuMuon.getSach())) {
-				String ktr = chiTietPhieuMuonController.addChiTietPhieuMuon(chiTietPhieuMuon);
+				String ktr = chiTietPhieuMuonController.addChiTietPhieuMuonById(chiTietPhieuMuon);
 				System.out.println(ktr +" - "+chiTietPhieuMuon.getSach().toString());
 			}
 		}

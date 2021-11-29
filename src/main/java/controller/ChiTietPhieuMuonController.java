@@ -44,6 +44,15 @@ public class ChiTietPhieuMuonController {
 		}
 		return list;
 	}
+	public String addChiTietPhieuMuonById(ChiTietPhieuMuon chiTietPhieuMuon){
+		try {
+			return chiTietPhieuMuonDao.addChiTietPhieuMuonById(chiTietPhieuMuon.getPhieuMuon().getId(), 
+					chiTietPhieuMuon.getSach().getId(), chiTietPhieuMuon.getSoLuong());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
 	public String addChiTietPhieuMuon(ChiTietPhieuMuon chiTietPhieuMuon) {
 		try {
 			return chiTietPhieuMuonDao.addChiTietPhieuMuon(chiTietPhieuMuon);
